@@ -10,8 +10,17 @@ const app = express();
 
 app.use(express.json())
 app.use(cors());
-
+    
 const server = http.createServer(app);
-server.listen(PORT, () => {
-    console.log(`server is listening on port ${PORT}`);
+
+
+mongoose.connect(process.env.MONGO_URI)
+.then(()=>{
+    server.listen(PORT, () => {
+        console.log(`server is listening on port ${PORT}`);
+    })
+})
+.catch((err) =>{
+    console.log('Error while configuration. Server not Started')
+    console.log(err)
 })
